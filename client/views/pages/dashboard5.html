@@ -1,0 +1,61 @@
+<template name="dashboard5">
+
+    {{> pageHeading title='Dashboard' }}
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center m-t-lg">
+                    <h1>
+                        Welcome to <strong> Mobile Data Mesh Architecture </strong>
+                    </h1>
+                    <small>
+                        Below is live data streaming from our <strong>House Station</strong>:
+                    </small>
+                </div>
+
+                <!-- Chart #1 -->
+                <div class="wrapper wrapper-content animated fadeIn">
+
+                    <div class="p-w-md m-t-sm">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="flot-chart m-b-xl">
+                                    <div class="flot-chart-content" id="chart1"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Chart #2 -->
+
+                <div class="wrapper wrapper-content animated fadeIn">
+
+                    <div class="p-w-md m-t-sm">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="flot-chart m-b-xl">
+                                    <div class="flot-chart-content" id="chart2"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
