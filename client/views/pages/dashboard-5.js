@@ -4,8 +4,43 @@
 Template.dashboard5.rendered = function(){
 
     // Set white background color for top navbar
-
     $('body').addClass('light-navbar');
+
+    // Sparkline Charts
+    var sparklineCharts = function(){
+        $("#sparkline1").sparkline([10, 9, 11, 8, 15, 12, 10, 16], {
+            type: 'line',
+            width: '100%',
+            height: '50',
+            lineColor: '#1ab394',
+            fillColor: "transparent"
+        });
+
+        $("#sparkline2").sparkline([32, 11, 25, 37, 41, 32, 34, 42], {
+            type: 'line',
+            width: '100%',
+            height: '50',
+            lineColor: '#1ab394',
+            fillColor: "transparent"
+        });
+
+        $("#sparkline3").sparkline([34, 22, 24, 41, 10, 18, 16,8], {
+            type: 'line',
+            width: '100%',
+            height: '50',
+            lineColor: '#1C84C6',
+            fillColor: "transparent"
+        });
+    };
+
+    var sparkResize;
+
+    $(window).resize(function(e) {
+        clearTimeout(sparkResize);
+        sparkResize = setTimeout(sparklineCharts, 500);
+    });
+
+    sparklineCharts();
 
     // Dummy data
     var data1 = [
@@ -15,13 +50,9 @@ Template.dashboard5.rendered = function(){
         [0,0],[1,2],[2,7],[3,4],[4,11],[5,4],[6,2],[7,5],[8,11],[9,5],[10,4],[11,1],[12,5],[13,2],[14,5],[15,2],[16,0]
     ];
 
-    var data3 = [
-        [0,6],[1,3],[2,7],[3,4],[4,10],[5,4],[6,2],[7,6],[8,10],[9,2],[10,7],[11,4],[12,6],[13,2],[14,5],[15,2],[16,0]
-    ];
-
     // Wind Speed
     $("#chart1").length && $.plot($("#chart1"), [
-            data1,  data2,  data3
+            data1,  data2
         ],
         {
             series: {
@@ -33,7 +64,7 @@ Template.dashboard5.rendered = function(){
                     show: true,
                     tension: 0.4,
                     lineWidth: 1,
-                    fill: 0.0
+                    fill: 0.4
                 },
                 points: {
                     radius: 0,
@@ -59,7 +90,7 @@ Template.dashboard5.rendered = function(){
 
     // Amount Percipitation
     $("#chart2").length && $.plot($("#chart2"), [
-            data1,  data2,  data3
+            data1,  data2
         ],
         {
             series: {
@@ -86,7 +117,7 @@ Template.dashboard5.rendered = function(){
                 borderWidth: 2,
                 color: 'transparent'
             },
-            colors: ["#1ab394", "#1C84C6", "#DB4C40" ],
+            colors: ["#1ab394", "#1C84C6", ],
             xaxis:{
             },
             yaxis: {
