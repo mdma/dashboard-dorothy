@@ -3,7 +3,8 @@
 
 Template.dashboard5.rendered = function(){
 
-    // Set white background color for top navbar 
+    // Set white background color for top navbar
+
     $('body').addClass('light-navbar');
 
     // Dummy data
