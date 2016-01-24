@@ -1,5 +1,26 @@
+var pinoccio;
 
-// Dash5 Logic
+var scouts = [];
+var Scout = function() {
+    this.name = 'Location';
+    this.last_update = 'Today';
+    this.uuid = 0;
+    this.battery_percentage = '93%';
+    this.temperature = "72°";
+    this.uptime = 0;
+};
+
+var dc = { //data container
+    tmp1: [],
+    tmp2: [],
+    tmp3: [],
+    hmd1: [],
+    hmd2: [],
+    hmd3: []
+}
+
+var tempPlot = null,
+    humidPlot = null;
 
 Template.dashboard.rendered = function(){
 
@@ -100,88 +121,215 @@ Template.dashboard.rendered = function(){
 
      sparklineCharts();
 
+    
 
-    // Dummy data
-    var data1 = [
-        [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,20],[11,10],[12,13],[13,4],[14,7],[15,8],[16,12]
-    ];
-    var data2 = [
-        [0,0],[1,2],[2,7],[3,4],[4,11],[5,4],[6,2],[7,5],[8,11],[9,5],[10,4],[11,1],[12,5],[13,2],[14,5],[15,2],[16,0]
-    ];
+    // Initiate PinoccioAPI
 
-    // Wind Speed
-    $("#chart1").length && $.plot($("#chart1"), [
-            data1,  data2
-        ],
+    pinoccio = pinoccioAPI('825bc05c3aa855810a0581921196f0b8');
+
+    pinoccio.login("mmclaughlin@brunoair.com", "alpineroot", function(error, data) {
+    });
+
+    pinoccio.rest({ url:"/v1/11/scouts" }, function( error, scoutsJSON ) {
+        if(error) return console.log('Oh No. I got an error getting my troops!', error);
+
+        scoutsJSON.push({name: "[5] (QP)",updated: "1451689199399",id: 5,time: 1450820329873});
+        scoutsJSON.push({name: "[6] (WR)",updated: "1451689199399",id: 6,time: 1450820329873});
+
+        for(index in scoutsJSON)
         {
-            series: {
-                lines: {
-                    show: false,
-                    fill: true
-                },
-                splines: {
-                    show: true,
-                    tension: 0.4,
-                    lineWidth: 1,
-                    fill: 0.4
-                },
-                points: {
-                    radius: 0,
-                    show: true
-                },
-                shadowSize: 2
-            },
-            grid: {
-                hoverable: true,
-                clickable: true,
+            var scout = new Scout();
+            scout.name = scoutsJSON[index].name;
+            scout.uuid = "011-0" + scoutsJSON[index].id;
 
-                borderWidth: 2,
-                color: 'transparent'
-            },
-            colors: ["#1ab394", "#1C84C6", "#DB4C40" ],
-            xaxis:{
-            },
-            yaxis: {
-            },
-            tooltip: false
+            scouts[index] = scout;
         }
-    );
 
-    // Amount Percipitation
-    $("#chart2").length && $.plot($("#chart2"), [
-            data1,  data2
-        ],
-        {
-            series: {
-                lines: {
-                    show: false,
-                    fill: true
-                },
-                splines: {
-                    show: true,
-                    tension: 0.4,
-                    lineWidth: 1,
-                    fill: 0.0
-                },
-                points: {
-                    radius: 0,
-                    show: true
-                },
-                shadowSize: 2
-            },
-            grid: {
-                hoverable: true,
-                clickable: true,
+        // Columns
+        // 0 - Name
+        // 1 - Last Update
+        // 2 - UUID
+        // 3 - Battery Percentage
+        // 4 - Onboard Temperature
+        // 5 - Uptime
 
-                borderWidth: 2,
-                color: 'transparent'
-            },
-            colors: ["#1ab394", "#1C84C6", ],
-            xaxis:{
-            },
-            yaxis: {
-            },
-            tooltip: false
+        if(scoutsJSON) {
+            nodesTable = $('.nodes-table').dataTable({
+                "processing": true,
+                data: scouts,
+                "columns": [
+                    { "data": "name" },
+                    { "data": "last_update"},
+                    { "data": "uuid" },
+                    { "data": "battery_percentage"},
+                    { "data": "temperature"},
+                    { "data": "uptime"}
+                ]
+            });
+
+            // Begin stream
+            syncPinoccio();
         }
-    );
+    });
 };
+
+function syncPinoccio() {
+
+    console.log('Sync')
+    pinoccio.sync().on('data',function(data) {
+
+        console.log(data);
+
+        if(data.type == 'custom.BME') {
+            var json = JSON.parse(data.value.custom[0]);
+
+            if (tempPlot == null) {
+                // Temperature
+                tempPlot = $.plot($("#chart2"), [
+
+                    ],
+                    {
+                        series: {
+                            lines: {
+                                show: false,
+                                fill: true
+                            },
+                            splines: {
+                                show: true,
+                                tension: 0.4,
+                                lineWidth: 1,
+                                fill: 0.0
+                            },
+                            points: {
+                                radius: 0,
+                                show: true
+                            },
+                            shadowSize: 2
+                        },
+                        grid: {
+                            hoverable: true,
+                            clickable: true,
+
+                            borderWidth: 2,
+                            color: 'transparent'
+                        },
+                        colors: ["#1ab394"],
+                        xaxis:{
+                        },
+                        yaxis: {
+                        },
+                        tooltip: false
+                    }
+                );
+            }
+
+            if (humidPlot == null) {
+                // Temperature
+                humidPlot = $.plot($("#chart1"), [
+
+                    ],
+                    {
+                        series: {
+                            lines: {
+                                show: false,
+                                fill: true
+                            },
+                            splines: {
+                                show: true,
+                                tension: 0.4,
+                                lineWidth: 1,
+                                fill: 0.4
+                            },
+                            points: {
+                                radius: 0,
+                                show: true
+                            },
+                            shadowSize: 2
+                        },
+                        grid: {
+                            hoverable: true,
+                            clickable: true,
+
+                            borderWidth: 2,
+                            color: 'transparent'
+                        },
+                        colors: ["#1ab394"],
+                        xaxis:{
+                        },
+                        yaxis: {
+                        },
+                        tooltip: false
+                    }
+                );
+            }
+
+            else {
+
+                if (!json) {
+                    //Temp
+                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, 0 + returnJitter(0.2)]);
+                    tempPlot.setData(returnTempArray());
+                    tempPlot.setupGrid();
+                    tempPlot.draw();
+                    //Humidity
+                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, 0 + returnJitter(0.2)]);
+                    humidPlot.setData(returnHmdArray());
+                    humidPlot.setupGrid();
+                    humidPlot.draw();
+                }
+                if (json) {
+                    //Temp
+                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, ((json.t * 1.8) +32) + returnJitter(0.2)]);
+                    tempPlot.setData(returnTempArray());
+                    tempPlot.setupGrid();
+                    tempPlot.draw();
+                    //Humidity
+                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, json.h + returnJitter(0.2)]);
+                    humidPlot.setData(returnHmdArray());
+                    humidPlot.setupGrid();
+                    humidPlot.draw();
+                    //Pressure
+            }
+        }
+
+    });
+};
+
+function returnTempArray() {
+    var array = [
+        dc.tmp1,
+        dc.tmp2,
+        dc.tmp3   
+    ];
+
+    return array;
+}
+
+function returnHmdArray() {
+    var array = [
+        dc.hmd1,
+        dc.hmd2,
+        dc.hmd3  
+    ];
+
+    return array;
+}
+
+
+function returnJitter(intensity)
+{
+    return (Math.random() - 0.5) * intensity;
+}
+
+function returnJitterArray(count, intensity)
+{
+    var array = [];
+
+    for (var i = 0; i < count; i++)
+    {
+        array.push(returnJitter(intensity));
+    }
+
+    return array;
+}
+
