@@ -16,11 +16,15 @@ var dc = { //data container
     tmp3: [],
     hmd1: [],
     hmd2: [],
-    hmd3: []
+    hmd3: [],
+    mtn1: [],
+    mtn2: [],
+    mtn3: []
 }
 
 var tempPlot = null,
-    humidPlot = null;
+    humidPlot = null,
+    motionPlot = null;
 
 Template.dashboard.rendered = function(){
 
@@ -94,25 +98,25 @@ Template.dashboard.rendered = function(){
         fillColor: "#ffffff"
     });
 
-    $("#sparkline5").sparkline([1, 4], {
+    $("#sparkline5").sparkline([2, 5], {
         type: 'pie',
         height: '140',
         sliceColors: ['#3893CD', '#FFF']
     });
 
-    $("#sparkline6").sparkline([5, 3], {
+    $("#sparkline6").sparkline([3, 7], {
         type: 'pie',
         height: '140',
         sliceColors: ['#3893CD', '#F5F5F5']
     });
 
-    $("#sparkline7").sparkline([2, 2], {
+    $("#sparkline7").sparkline([2, 4], {
         type: 'pie',
         height: '140',
         sliceColors: ['#3893CD', '#F5F5F5']
     });
 
-    $("#sparkline8").sparkline([2, 3], {
+    $("#sparkline8").sparkline([5, 14], {
         type: 'pie',
         height: '140',
         sliceColors: ['#3893CD', '#F5F5F5']
@@ -213,7 +217,7 @@ function syncPinoccio() {
                             borderWidth: 2,
                             color: 'transparent'
                         },
-                        colors: ["#1ab394"],
+                        colors: ["#1ab394, #3893CD, #ED5565"],
                         xaxis:{
                         },
                         yaxis: {
@@ -263,32 +267,85 @@ function syncPinoccio() {
                 );
             }
 
+            if (motionPlot == null) {
+                // Temperature
+                motionPlot = $.plot($("#chart3"), [
+
+                    ],
+                    {
+                        series: {
+                            lines: {
+                                show: false,
+                                fill: true
+                            },
+                            splines: {
+                                show: true,
+                                tension: 0.4,
+                                lineWidth: 1,
+                                fill: 0.4
+                            },
+                            points: {
+                                radius: 0,
+                                show: true
+                            },
+                            shadowSize: 2
+                        },
+                        grid: {
+                            hoverable: true,
+                            clickable: true,
+
+                            borderWidth: 2,
+                            color: 'transparent'
+                        },
+                        colors: ["#3893CD"],
+                        xaxis:{
+                        },
+                        yaxis: {
+                        },
+                        tooltip: false
+                    }
+                );
+            }
+
             else {
 
                 if (!json) {
                     //Temp
-                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, 0 + returnJitter(0.2)]);
+                    console.log(json);
+                    console.log(data.scout + " replying false");
+                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, 0 + returnJitter(0.8)]);
                     tempPlot.setData(returnTempArray());
                     tempPlot.setupGrid();
                     tempPlot.draw();
                     //Humidity
-                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, 0 + returnJitter(0.2)]);
+                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, 0 + returnJitter(0.8)]);
                     humidPlot.setData(returnHmdArray());
                     humidPlot.setupGrid();
                     humidPlot.draw();
+                    //Motion
+                    dc["mtn"+(data.scout-1)].push([dc["mtn"+(data.scout-1)].length, 0 + returnJitter(5)]);
+                    motionPlot.setData(returnMtnArray());
+                    motionPlot.setupGrid();
+                    motionPlot.draw();
                 }
                 if (json) {
                     //Temp
-                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, ((json.t * 1.8) +32) + returnJitter(0.2)]);
+                    dc["tmp"+(data.scout-1)].push([dc["tmp"+(data.scout-1)].length, ((json.t * 1.8) +32) + returnJitter(5)]);
                     tempPlot.setData(returnTempArray());
                     tempPlot.setupGrid();
                     tempPlot.draw();
                     //Humidity
-                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, json.h + returnJitter(0.2)]);
+                    dc["hmd"+(data.scout-1)].push([dc["hmd"+(data.scout-1)].length, json.h + returnJitter(5)]);
                     humidPlot.setData(returnHmdArray());
                     humidPlot.setupGrid();
                     humidPlot.draw();
-                    //Pressure
+                    updateHumPie(data.scout, json.h);
+                    //Motion
+                    dc["mtn"+(data.scout-1)].push([dc["mtn"+(data.scout-1)].length, json.h + returnJitter(5)]);
+                    motionPlot.setData(returnMtnArray());
+                    motionPlot.setupGrid();
+                    motionPlot.draw();
+                }
             }
         }
 
@@ -315,6 +372,16 @@ function returnHmdArray() {
     return array;
 }
 
+function returnMtnArray() {
+    var array = [
+        dc.mtn1,
+        dc.mtn2,
+        dc.mtn3  
+    ];
+
+    return array;
+}
+
 
 function returnJitter(intensity)
 {
@@ -331,5 +398,26 @@ function returnJitterArray(count, intensity)
     }
 
     return array;
+}
+
+function updateHumPie(target, value) {
+    
+    var avg = Math.floor((parseInt($("#hum2").html().slice(0,2)) + parseInt($("#hum3").html().slice(0,2)) + parseInt($("#hum4").html().slice(0,2))) / 3)
+
+    $("#hum1").html(avg + "%");
+
+    $("#sparkline5").sparkline([avg, (100 - avg)], {
+        type: 'pie',
+        height: '140',
+        sliceColors: ['#3893CD', '#FFF']
+    });
+
+    $("#hum" + target).html(value + "%");
+
+    $("#sparkline" + (target + 4)).sparkline([value, (100 - value)], {
+        type: 'pie',
+        height: '140',
+        sliceColors: ['#3893CD', '#FFF']
+    });
 }
 
