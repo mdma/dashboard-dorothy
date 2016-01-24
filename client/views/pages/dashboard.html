@@ -1,4 +1,4 @@
-<template name="dashboard5">
+<template name="dashboard">
 
     {{> pageHeading title='Dashboard' }}
 
@@ -6,21 +6,11 @@
         <div class="p-w-md m-t-sm">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="text-center m-t-lg" style="background: #fff; padding: 22.5px 0 ">
-                        <h1>
-                            Welcome to <strong> Mobile Data Mesh Architecture </strong>
-                        </h1>
-                        <small>
-                            Below is live data streaming from our <strong>House Station</strong>:
-                        </small>
-                    </div>
 
-                    <br>
-                    <br>
                     <!-- House Station Chart-->
 
 
-                    <div class="row" style="margin: 0 22.5px;">
+                    <div class="row">
                         <h1 style="margin: 22.5px 12.5px">House Station Data</h1>
                         <div class="col-sm-4">
                             <h2 class="m-b-xs">
@@ -128,7 +118,7 @@
                     <br>
 
 
-                    <!-- Humidity -->
+                    <!-- Humidity Line -->
 
                     <div class="wrapper wrapper-content animated fadeIn" style="background: #fff;">
 
@@ -148,6 +138,9 @@
 
                         </div>
                     </div>
+
+                    <br>
+                    <br>
 
                     <!-- Temperature -->
 
@@ -176,10 +169,10 @@
                     <!-- Chart # 6, 7, 8  Onboard Metrics-->
 
 
-                    <div class="row" style="margin: 0 22.5px;">
+                    <div class="row">
                         <div class="col-lg-3">
                             <div class="ibox">
-                                <div class="ibox-content">
+                                <div class="ibox-content" id="overview">
                                     <h5>Node Overview</h5>
                                     <table class="table table-stripped small m-t-md">
                                         <tbody>
@@ -188,7 +181,7 @@
                                                 <i class="fa fa-circle text-navy"></i>
                                             </td>
                                             <td  class="no-borders">
-                                                #pl01
+                                                #PL01
                                             </td>
                                         </tr>
                                         <tr>
@@ -196,7 +189,7 @@
                                                 <i class="fa fa-circle text-navy"></i>
                                             </td>
                                             <td>
-                                                #pl02
+                                                #PL02
                                             </td>
                                         </tr>
                                         <tr>
@@ -204,18 +197,26 @@
                                                 <i class="fa fa-circle text-navy"></i>
                                             </td>
                                             <td>
-                                                #pl03
+                                                #PL03
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <!-- Progress Status -->
+                                     <div class="ibox-content" id="overview">
+                                        <h5>Nodes Live</h5>
+                                        <h2>100%</h2>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 100%;" class="progress-bar"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="ibox">
                                 <div class="ibox-content">
-                                    <h5>#pl01</h5>
+                                    <h5>#PL01</h5>
                                     <table class="table table-stripped small m-t-md">
                                         <tbody>
                                         <tr>
@@ -258,7 +259,7 @@
                         <div class="col-lg-3">
                             <div class="ibox">
                                 <div class="ibox-content">
-                                    <h5>#pl02</h5>
+                                    <h5>#PL02</h5>
                                     <table class="table table-stripped small m-t-md">
                                         <tbody>
                                         <tr>
@@ -301,7 +302,7 @@
                         <div class="col-lg-3">
                             <div class="ibox">
                                 <div class="ibox-content">
-                                    <h5>#pl03</h5>
+                                    <h5>#PL03</h5>
                                     <table class="table table-stripped small m-t-md">
                                         <tbody>
                                         <tr>
@@ -343,6 +344,100 @@
                         </div>
                     </div>
 
+                    <!-- Humidity per node -->
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content" id="overview">
+                                    <h5>Average Humidity</h5>
+                                    <h2>20%</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL01</h5>
+                                    <h2>62%</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline6"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL02</h5>
+                                    <h2>50%</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline7"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL03</h5>
+                                    <h2>40%</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline8"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Barometric pressure -->
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content" id="overview">
+                                    <h5>Average Barometric Pressure</h5>
+                                    <h1 class="no-margins">1,100</h1>
+                                    <div class="stat-percent font-bold text-navy">1% <i class="fa fa-level-up"></i></div>
+                                    <small>millibars</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL01</h5>
+                                    <h1 class="no-margins">1,090</h1>
+                                    <div class="stat-percent font-bold text-navy">3% <i class="fa fa-level-up"></i></div>
+                                    <small>millibars</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL02</h5>
+                                    <h1 class="no-margins">1,020</h1>
+                                    <div class="stat-percent font-bold text-danger">2% <i class="fa fa-level-down"></i></div>
+                                    <small>millibars</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#PL03</h5>
+                                    <h1 class="no-margins">980</h1>
+                                    <div class="stat-percent font-bold text-danger">4% <i class="fa fa-level-down"></i></div>
+                                    <small>millibars</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>

@@ -24,8 +24,17 @@
                         IN+
                     </div>
                 </li>
-                <li class="{{isActiveRoute regex='pageOne'}}">
-                    <a href="{{pathFor route='pageOne'}}"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span> </a>
+                <li class="{{isActiveRoute regex='dashboard'}}">
+                    <a href="{{pathFor route='dashboard'}}"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span> </a>
+                </li>
+                <li class="{{isActiveRoute regex='admin'}}">
+                    <a href="{{pathFor route='admin'}}"><i class="fa fa-user"></i> <span class="nav-label">Admin</span> </a>
+                </li>
+                <li class="{{isActiveRoute regex='locations'}}">
+                    <a href="{{pathFor route='locations'}}"><i class="fa fa-globe"></i> <span class="nav-label">Locations</span> </a>
+                </li>
+                <li class="{{isActiveRoute regex='diagnostic'}}">
+                    <a href="{{pathFor route='diagnostic'}}"><i class="fa fa-flask"></i> <span class="nav-label">Diagnostic</span> </a>
                 </li>
             </ul>
 

@@ -1,7 +1,7 @@
 
 // Dash5 Logic
 
-Template.dashboard5.rendered = function(){
+Template.dashboard.rendered = function(){
 
     // Set white background color for top navbar
     $('body').addClass('light-navbar');
@@ -76,25 +76,25 @@ Template.dashboard5.rendered = function(){
     $("#sparkline5").sparkline([1, 4], {
         type: 'pie',
         height: '140',
-        sliceColors: ['#1ab394', '#F5F5F5']
+        sliceColors: ['#3893CD', '#FFF']
     });
 
     $("#sparkline6").sparkline([5, 3], {
         type: 'pie',
         height: '140',
-        sliceColors: ['#1ab394', '#F5F5F5']
+        sliceColors: ['#3893CD', '#F5F5F5']
     });
 
     $("#sparkline7").sparkline([2, 2], {
         type: 'pie',
         height: '140',
-        sliceColors: ['#ed5565', '#F5F5F5']
+        sliceColors: ['#3893CD', '#F5F5F5']
     });
 
     $("#sparkline8").sparkline([2, 3], {
         type: 'pie',
         height: '140',
-        sliceColors: ['#ed5565', '#F5F5F5']
+        sliceColors: ['#3893CD', '#F5F5F5']
     });
 
 
