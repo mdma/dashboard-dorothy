@@ -6,7 +6,7 @@
         <div class="p-w-md m-t-sm">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="text-center m-t-lg">
+                    <div class="text-center m-t-lg" style="background: #fff; padding: 22.5px 0 ">
                         <h1>
                             Welcome to <strong> Mobile Data Mesh Architecture </strong>
                         </h1>
@@ -15,34 +15,12 @@
                         </small>
                     </div>
 
-
-                    <!-- Chart #1 -->
-
-                    <div class="wrapper wrapper-content animated fadeIn">
-
-                        <div class="p-w-md m-t-sm">
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h1>Temperature</h1>
-                                    <small>Connected nodes: <strong>ALL</strong></small>
-                                    <div class="flot-chart m-b-xl">
-                                        <div class="flot-chart-content" id="chart1"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <br>
+                    <br>
+                    <!-- House Station Chart-->
 
 
-
-                    <!-- Chart # 2, 3, 4 -->
-
-
-                    <div class="row" style="margin: 0 22.5px; background: #fff;">
+                    <div class="row" style="margin: 0 22.5px;">
                         <h1 style="margin: 22.5px 12.5px">House Station Data</h1>
                         <div class="col-sm-4">
                             <h2 class="m-b-xs">
@@ -146,11 +124,13 @@
 
                     </div>
 
+                    <br>
+                    <br>
 
 
-                    <!-- Chart #5 -->
+                    <!-- Humidity -->
 
-                    <div class="wrapper wrapper-content animated fadeIn">
+                    <div class="wrapper wrapper-content animated fadeIn" style="background: #fff;">
 
                         <div class="p-w-md m-t-sm">
 
@@ -168,6 +148,201 @@
 
                         </div>
                     </div>
+
+                    <!-- Temperature -->
+
+                    <div class="wrapper wrapper-content animated fadeIn" style="background: #fff;">
+
+                        <div class="p-w-md m-t-sm">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1>Temperature</h1>
+                                    <small>Connected nodes: <strong>ALL</strong></small>
+                                    <div class="flot-chart m-b-xl">
+                                        <div class="flot-chart-content" id="chart1"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <br>
+
+                    <!-- Chart # 6, 7, 8  Onboard Metrics-->
+
+
+                    <div class="row" style="margin: 0 22.5px;">
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>Node Overview</h5>
+                                    <table class="table table-stripped small m-t-md">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-borders">
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td  class="no-borders">
+                                                #pl01
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td>
+                                                #pl02
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td>
+                                                #pl03
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#pl01</h5>
+                                    <table class="table table-stripped small m-t-md">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-borders">
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td  class="no-borders">
+                                                HPT Module
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td>
+                                                Motion Cluster
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-navy"></i>
+                                            </td>
+                                            <td>
+                                                Peripherals
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- Progress Status -->
+                                     <div class="ibox-content">
+                                        <h5>Battery</h5>
+                                        <h2>65%</h2>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 68%;" class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#pl02</h5>
+                                    <table class="table table-stripped small m-t-md">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-borders">
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td  class="no-borders">
+                                                HPT Module
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td>
+                                                Motion Cluster
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td>
+                                                Peripherals
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- Progress Status -->
+                                     <div class="ibox-content">
+                                        <h5>Battery</h5>
+                                        <h2>96%</h2>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 99%;" class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>#pl03</h5>
+                                    <table class="table table-stripped small m-t-md">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-borders">
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td  class="no-borders">
+                                                HPT Module
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td>
+                                                Motion Cluster
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-circle text-danger"></i>
+                                            </td>
+                                            <td>
+                                                Peripherals
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- Progress Status -->
+                                     <div class="ibox-content">
+                                        <h5>Battery</h5>
+                                        <h2>16%</h2>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 19%; background:#ED5565;" class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                 </div>
